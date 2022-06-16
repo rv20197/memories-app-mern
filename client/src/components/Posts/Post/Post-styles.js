@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
 	media: {
