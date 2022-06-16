@@ -6,7 +6,7 @@ import cors from 'cors';
 import postRoutes from './routes/posts-routes.js';
 
 const CONNECTION_URL =
-	'mongodb+srv://vatsal:vatsal2001@nodejslearning.yc4og.mongodb.net/?retryWrites=true&w=majority';
+	'mongodb+srv://vatsal:vatsal2001@nodejslearning.yc4og.mongodb.net/memories?retryWrites=true&w=majority';
 
 const PORT = process.env.PORT || 5000;
 
