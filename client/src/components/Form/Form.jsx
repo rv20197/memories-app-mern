@@ -13,7 +13,14 @@ const Form = () => {
 				autoComplete='off'
 				noValidate
 				className={classes.form}
-				onSubmit={submitHandler}></form>
+				onSubmit={submitHandler}>
+				<Typography variant='h6'>Creating Memory</Typography>
+				<TextField
+					name='creator'
+					variant='outlined'
+					label='Creator'
+					fullWidth></TextField>
+			</form>
 		</Paper>
 	);
 };
