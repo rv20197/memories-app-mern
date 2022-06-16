@@ -1,6 +1,6 @@
 import * as api from '../../api/index';
 
-export const getPosts = () => async dispatch => {
+export const getPosts = () => async (dispatch) => {
 	try {
 		const { data } = await api.fetchPosts();
 		const action = { type: 'FETCH_POSTS', payload: data };

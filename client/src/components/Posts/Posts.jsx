@@ -7,7 +7,7 @@ import useStyles from './Posts-styles';
 const Posts = () => {
 	const classes = useStyles();
 
-	const posts = useSelector(state => state.postsReducer);
+	const posts = useSelector(state => state.posts);
 
 	console.log(posts);
 	return (

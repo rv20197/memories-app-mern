@@ -33,7 +33,7 @@ function App() {
 				<Container>
 					<Grid
 						container
-						justifyItems='space-between'
+						justifyContent='space-between'
 						alignItems='stretch'
 						spacing={4}>
 						<Grid item xs={12} sm={7}>
