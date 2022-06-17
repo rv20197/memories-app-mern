@@ -3,7 +3,8 @@ import {
 	getPosts,
 	createPost,
 	updatePost,
-	deletePost
+	deletePost,
+	likePost
 } from '../controllers/posts-controller.js';
 
 const router = express.Router();
@@ -19,5 +20,8 @@ router.patch('/:id', updatePost);
 
 // DELETE: http://localhost:5000/posts/:id
 router.delete('/:id', deletePost);
+
+// PATCH: http://localhost:5000/posts/:id/likePost
+router.patch('/:id/likePost', likePost);
 
 export default router;
