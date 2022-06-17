@@ -15,7 +15,7 @@ export const createPost = async (req, res, next) => {
 		const post = req.body;
 		const newPost = new PostMessage(post);
 		await newPost.save();
-		res.status(201).json({ message: 'Post Created', newPost });
+		res.status(201).json(newPost);
 	} catch (error) {
 		res.status(409).json({ message: error.message });
 	}
@@ -38,9 +38,9 @@ export const updatePost = async (req, res, next) => {
 			}
 		);
 
-		res.status(204).json({ message: 'Post Updated', updatedPost });
+		res.status(204).json(updatedPost);
 	} catch (error) {
-		res.status(409).json({ message: error.message });
+		res.status(404).json({ message: error.message });
 	}
 };
 
@@ -55,7 +55,7 @@ export const deletePost = async (req, res, next) => {
 		await PostMessage.findByIdAndRemove(_id);
 		res.status(200).json({ message: 'Post deleted' });
 	} catch (error) {
-		res.status(409).json({ message: error.message });
+		res.status(404).json({ message: error.message });
 	}
 };
 
@@ -78,7 +78,7 @@ export const likePost = async (req, res, next) => {
 			}
 		);
 
-		res.status(204).json({ message: 'Post Updated', updatedPost });
+		res.status(204).json(updatedPost);
 	} catch (error) {
 		res.status(409).json({ message: error.message });
 	}
