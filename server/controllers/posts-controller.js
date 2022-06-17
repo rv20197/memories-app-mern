@@ -68,6 +68,7 @@ export const likePost = async (req, res, next) => {
 		}
 
 		const post = await PostMessage.findById(_id);
+
 		const updatedPost = await PostMessage.findByIdAndUpdate(
 			_id,
 			{
@@ -78,7 +79,7 @@ export const likePost = async (req, res, next) => {
 			}
 		);
 		console.log(updatedPost);
-		res.status(204).json(updatedPost);
+		res.status(200).json(updatedPost);
 	} catch (error) {
 		res.status(409).json({ message: error.message });
 	}
