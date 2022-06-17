@@ -38,7 +38,7 @@ export const updatePost = async (req, res, next) => {
 			}
 		);
 
-		res.status(204).json(updatedPost);
+		res.status(200).json(updatedPost);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
 	}
