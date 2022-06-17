@@ -23,20 +23,21 @@ function App() {
 	return (
 		<Container maxWidth='lg'>
 			<AppBar position='static' color='inherit' className={classes.appBar}>
-				<Typography variant='h2' align='center' className={classes.heading}>
-					Memories
-				</Typography>
 				<img
 					src={memories}
 					alt='memories'
 					height='60'
 					className={classes.image}
 				/>
+				<Typography variant='h2' align='center' className={classes.heading}>
+					Memories
+				</Typography>
 			</AppBar>
 			<Grow in>
 				<Container>
 					<Grid
 						container
+						className={classes.mainContainer}
 						justifyContent='space-between'
 						alignItems='stretch'
 						spacing={4}>

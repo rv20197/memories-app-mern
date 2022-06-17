@@ -76,7 +76,7 @@ const Post = ({ post, setCurrentPostId }) => {
 			<CardActions className={classes.cardActions}>
 				<Button size='small' color='primary' onClick={likePostHandler}>
 					<ThumbUpAltIcon fontSize='small' />
-					{`Like ${post.likeCount}`}
+					&nbsp; Like &nbsp; {post.likeCount}
 				</Button>
 
 				<Button size='small' color='secondary' onClick={deletePostHandler}>
