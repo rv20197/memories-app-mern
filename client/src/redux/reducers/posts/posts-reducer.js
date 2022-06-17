@@ -10,6 +10,8 @@ const postsReducer = (state = initialState, { type, payload }) => {
 			return state.map(post => (post._id === payload._id ? payload : post));
 		case 'DELETE_POST':
 			return state.filter(post => post._id !== payload);
+		case 'LIKE_POST':
+			return state.map(post => (post._id === payload._id ? payload : post));
 		default:
 			return state;
 	}
