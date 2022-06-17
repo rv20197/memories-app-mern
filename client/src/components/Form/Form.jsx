@@ -30,10 +30,10 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 
 	const submitHandler = e => {
 		e.preventDefault();
-		if (currentPostId) {
-			dispatch(updatePost(currentPostId, postData));
-		} else {
+		if (!currentPostId) {
 			dispatch(createPost(postData));
+		} else {
+			dispatch(updatePost(currentPostId, postData));
 		}
 		clearFormHandler();
 	};
