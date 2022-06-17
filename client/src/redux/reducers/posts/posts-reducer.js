@@ -5,7 +5,9 @@ const postsReducer = (state = initialState, { type, payload }) => {
 		case 'FETCH_POSTS':
 			return [...payload];
 		case 'CREATE_POST':
-			return [{...state, ...payload}];
+			return [{ ...state, ...payload }];
+		case 'UPDATE_POST':
+			return state.map(post => (post._id === payload._id ? payload : post));
 		default:
 			return state;
 	}

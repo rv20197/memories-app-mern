@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './Form-styles';
-import { createPost } from '../../redux/actions/post-action';
+import { createPost, updatePost } from '../../redux/actions/post-action';
 
-const Form = () => {
+const Form = ({ currentPostId, setCurrentPostId }) => {
 	const [postData, setPostData] = useState({
 		creator: '',
 		title: '',
@@ -16,18 +15,34 @@ const Form = () => {
 		selectedFile: ''
 	});
 
+	const post = useSelector(state =>
+		currentPostId ? state.posts.find(post => post._id === currentPostId) : null
+	);
+
+	useEffect(() => {
+		if (post) {
+			setPostData(post);
+		}
+	}, [post]);
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
 	const submitHandler = e => {
 		e.preventDefault();
-		dispatch(createPost(postData));
+		if (currentPostId) {
+			dispatch(updatePost(currentPostId, postData));
+		} else {
+			dispatch(createPost(postData));
+		}
+		clearFormHandler();
 	};
 
 	const fileUploadHandler = ({ base64 }) =>
 		setPostData({ ...postData, selectedFile: base64 });
 
 	const clearFormHandler = () => {
+		setCurrentPostId(null);
 		setPostData({
 			creator: '',
 			title: '',
@@ -44,7 +59,9 @@ const Form = () => {
 				noValidate
 				className={`${classes.root} ${classes.form}`}
 				onSubmit={submitHandler}>
-				<Typography variant='h6'>Creating Memory</Typography>
+				<Typography variant='h6'>
+					{currentPostId ? 'Editing Memory' : 'Creating Memory'}
+				</Typography>
 				<TextField
 					name='creator'
 					variant='outlined'
@@ -90,7 +107,7 @@ const Form = () => {
 					size='large'
 					type='submit'
 					fullWidth>
-					Create Post
+					{currentPostId ? 'Edit Post' : 'Create Post'}
 				</Button>
 
 				<Button
