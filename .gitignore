@@ -20,4 +20,4 @@
 /clientnpm-debug.log*
 /clientyarn-debug.log*
 /clientyarn-error.log*
-server/.env
+/server/.env
