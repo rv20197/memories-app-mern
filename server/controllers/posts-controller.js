@@ -4,7 +4,6 @@ import PostMessage from '../models/postsMessage-model.js';
 export const getPosts = async (req, res, next) => {
 	try {
 		const postMessages = await PostMessage.find();
-		console.log(postMessages);
 		res.status(200).json(postMessages);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
@@ -31,11 +30,15 @@ export const updatePost = async (req, res, next) => {
 			return res.status(404).send({ message: 'No Post found with that Id' });
 		}
 
-		const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
-			new: true
-		});
+		const updatedPost = await PostMessage.findByIdAndUpdate(
+			_id,
+			{ ...post, _id },
+			{
+				new: true
+			}
+		);
 
-		res.status(204).json(updatedPost)
+		res.status(204).json(updatedPost);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
 	}
