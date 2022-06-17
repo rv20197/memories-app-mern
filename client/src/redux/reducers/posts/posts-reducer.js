@@ -1,16 +1,24 @@
+import {
+	FETCH_POSTS,
+	CREATE_POST,
+	UPDATE_POST,
+	DELETE_POST,
+	LIKE_POST
+} from '../../../constants/actionTypes';
+
 const initialState = [];
 
 const postsReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
-		case 'FETCH_POSTS':
+		case FETCH_POSTS:
 			return [...payload];
-		case 'CREATE_POST':
+		case CREATE_POST:
 			return [{ ...state, ...payload }];
-		case 'UPDATE_POST':
+		case UPDATE_POST:
 			return state.map(post => (post._id === payload._id ? payload : post));
-		case 'DELETE_POST':
+		case DELETE_POST:
 			return state.filter(post => post._id !== payload);
-		case 'LIKE_POST':
+		case LIKE_POST:
 			return state.map(post => (post._id === payload._id ? payload : post));
 		default:
 			return state;
