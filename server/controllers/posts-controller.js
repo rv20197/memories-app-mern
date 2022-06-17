@@ -59,7 +59,7 @@ export const deletePost = async (req, res, next) => {
 	}
 };
 
-export const likePost = async () => {
+export const likePost = async (req, res, next) => {
 	try {
 		const { id: _id } = req.params;
 
@@ -67,7 +67,7 @@ export const likePost = async () => {
 			return res.status(404).send({ message: 'No Post found with that Id' });
 		}
 
-		const post = await PostMessage.findById(id);
+		const post = await PostMessage.findById(_id);
 		const updatedPost = await PostMessage.findByIdAndUpdate(
 			_id,
 			{
