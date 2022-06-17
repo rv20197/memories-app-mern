@@ -13,6 +13,10 @@ app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
+app.get('/', (req, res) => {
+	res.send('Welcome to Memories API');
+});
+
 app.use('/posts', postRoutes);
 
 mongoose
