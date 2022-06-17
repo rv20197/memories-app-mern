@@ -6,11 +6,12 @@ import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import { getPosts } from './redux/actions/post-action';
 
-import styles from './App.module.css';
+import useclasses from './App-styles';
 import memories from './assets/images/memories.png';
 
 function App() {
 	const dispatch = useDispatch();
+	const classes = useclasses();
 
 	useEffect(() => {
 		dispatch(getPosts());
@@ -18,15 +19,15 @@ function App() {
 
 	return (
 		<Container maxWidth='lg'>
-			<AppBar position='static' color='inherit' className={styles.appBar}>
-				<Typography variant='h2' align='center' className={styles.heading}>
+			<AppBar position='static' color='inherit' className={classes.appBar}>
+				<Typography variant='h2' align='center' className={classes.heading}>
 					Memories
 				</Typography>
 				<img
 					src={memories}
 					alt='memories'
 					height='60'
-					className={styles.image}
+					className={classes.image}
 				/>
 			</AppBar>
 			<Grow in>

@@ -15,6 +15,7 @@ const Form = () => {
 		tags: '',
 		selectedFile: ''
 	});
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
