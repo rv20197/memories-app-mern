@@ -4,8 +4,7 @@ import {
 	FETCH_POSTS,
 	CREATE_POST,
 	UPDATE_POST,
-	DELETE_POST,
-	LIKE_POST
+	DELETE_POST
 } from '../../constants/actionTypes';
 
 export const getPosts = () => async dispatch => {
@@ -41,7 +40,7 @@ export const updatePost = (id, updatedPost) => async dispatch => {
 export const likePost = id => async dispatch => {
 	try {
 		const { data } = await api.likePost(id);
-		const action = { type: LIKE_POST, payload: data };
+		const action = { type: UPDATE_POST, payload: data };
 		dispatch(action);
 	} catch (error) {
 		console.error(error);
