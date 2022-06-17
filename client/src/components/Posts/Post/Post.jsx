@@ -27,7 +27,6 @@ const Post = ({ post, setCurrentPostId }) => {
 	};
 
 	const likePostHandler = () => {
-		console.log(post._id);
 		dispatch(likePost(post._id));
 	};
 
