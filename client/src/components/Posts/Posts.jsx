@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress,Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import Post from './Post/Post';
@@ -14,7 +14,7 @@ const Posts = ({ setCurrentPostId }) => {
 	return (
 		<>
 			{!posts.length ? (
-				<CircularProgress />
+				<Typography variant='h3'>No Posts Found!</Typography>
 			) : (
 				<Grid
 					className={classes.mainContainer}
