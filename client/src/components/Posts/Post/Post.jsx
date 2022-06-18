@@ -9,7 +9,9 @@ import {
 	Button,
 	Typography
 } from '@material-ui/core';
+
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
@@ -21,6 +23,7 @@ import useStyles from './Post-styles';
 const Post = ({ post, setCurrentPostId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const user = JSON.parse(localStorage.getItem('profile'));
 
 	const updatePostHandler = () => {
 		setCurrentPostId(post._id);
@@ -32,6 +35,34 @@ const Post = ({ post, setCurrentPostId }) => {
 
 	const deletePostHandler = () => {
 		dispatch(deletePost(post._id));
+	};
+
+	const Likes = () => {
+		if (post.likes.length > 0) {
+			return post.likes.find(
+				like => like === (user?.result?.googleId || user?.result?._id)
+			) ? (
+				<>
+					<ThumbUpAltIcon fontSize='small' />
+					&nbsp;
+					{post.likes.length > 2
+						? `You and ${post.likes.length - 1} others`
+						: `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}`}
+				</>
+			) : (
+				<>
+					<ThumbUpAltOutlined fontSize='small' />
+					&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+				</>
+			);
+		}
+
+		return (
+			<>
+				<ThumbUpAltOutlined fontSize='small' />
+				&nbsp;Like
+			</>
+		);
 	};
 
 	return (
@@ -50,12 +81,15 @@ const Post = ({ post, setCurrentPostId }) => {
 			</div>
 
 			<div className={classes.overlay2}>
-				<Button
-					style={{ color: 'white' }}
-					size='small'
-					onClick={updatePostHandler}>
-					<MoreHorizIcon fontSize='medium' />
-				</Button>
+				{(user?.result?.googleId === post?.creator ||
+					user?.result?._id === post?.creator) && (
+					<Button
+						style={{ color: 'white' }}
+						size='small'
+						onClick={updatePostHandler}>
+						<MoreHorizIcon fontSize='medium' />
+					</Button>
+				)}
 			</div>
 
 			<div className={classes.details}>
@@ -73,15 +107,21 @@ const Post = ({ post, setCurrentPostId }) => {
 			</CardContent>
 
 			<CardActions className={classes.cardActions}>
-				<Button size='small' color='primary' onClick={likePostHandler}>
-					<ThumbUpAltIcon fontSize='small' />
-					&nbsp; Like &nbsp; {post.likeCount}
+				<Button
+					size='small'
+					color='primary'
+					onClick={likePostHandler}
+					disabled={!user?.result}>
+					<Likes />
 				</Button>
 
-				<Button size='small' color='secondary' onClick={deletePostHandler}>
-					<DeleteIcon fontSize='small' />
-					Delete
-				</Button>
+				{(user?.result?.googleId === post?.creator ||
+					user?.result?._id === post?.creator) && (
+					<Button size='small' color='secondary' onClick={deletePostHandler}>
+						<DeleteIcon fontSize='small' />
+						Delete
+					</Button>
+				)}
 			</CardActions>
 		</Card>
 	);
