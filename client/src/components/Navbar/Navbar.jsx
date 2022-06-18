@@ -54,7 +54,7 @@ const Navbar = () => {
 						to='/auth'
 						variant='contained'
 						color='primary'>
-						Login
+						Sign In
 					</Button>
 				)}
 			</Toolbar>
