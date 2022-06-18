@@ -10,7 +10,6 @@ const Posts = ({ setCurrentPostId }) => {
 	const classes = useStyles();
 
 	const posts = useSelector(state => state.posts);
-
 	return (
 		<>
 			{!posts.length ? (
@@ -21,8 +20,8 @@ const Posts = ({ setCurrentPostId }) => {
 					container
 					alignItems='stretch'
 					spacing={3}>
-					{posts.map(post => (
-						<Grid key={post._id} item xs={12} sm={6}>
+						{posts.map(post => (
+							<Grid key={post._id} item xs={12} sm={6}>
 							<Post post={post} setCurrentPostId={setCurrentPostId} />
 						</Grid>
 					))}

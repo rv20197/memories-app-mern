@@ -7,8 +7,11 @@ import useStyles from './Form-styles';
 import { createPost, updatePost } from '../../redux/actions/post-action';
 
 const Form = ({ currentPostId, setCurrentPostId }) => {
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const user = JSON.parse(localStorage.getItem('profile'));
+
 	const [postData, setPostData] = useState({
-		creator: '',
 		title: '',
 		message: '',
 		tags: '',
@@ -25,15 +28,14 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 		}
 	}, [post]);
 
-	const classes = useStyles();
-	const dispatch = useDispatch();
-
 	const submitHandler = e => {
 		e.preventDefault();
 		if (!currentPostId) {
-			dispatch(createPost(postData));
+			dispatch(createPost({ ...postData, name: user?.result?.name }));
 		} else {
-			dispatch(updatePost(currentPostId, postData));
+			dispatch(
+				updatePost(currentPostId, { ...postData, name: user?.result?.name })
+			);
 		}
 		clearFormHandler();
 	};
@@ -44,13 +46,22 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 	const clearFormHandler = () => {
 		setCurrentPostId(null);
 		setPostData({
-			creator: '',
 			title: '',
 			message: '',
 			tags: '',
 			selectedFile: ''
 		});
 	};
+
+	if (!user?.result?.name) {
+		return (
+			<Paper className={classes.paper}>
+				<Typography variant='h6' align='center'>
+					Please SignIn To Create or Like Posts
+				</Typography>
+			</Paper>
+		);
+	}
 
 	return (
 		<Paper className={classes.paper}>
@@ -62,14 +73,6 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 				<Typography variant='h6'>
 					{currentPostId ? 'Editing Memory' : 'Creating Memory'}
 				</Typography>
-				<TextField
-					name='creator'
-					variant='outlined'
-					label='Creator'
-					fullWidth
-					value={postData.creator}
-					onChange={e => setPostData({ ...postData, creator: e.target.value })}
-				/>
 
 				<TextField
 					name='title'

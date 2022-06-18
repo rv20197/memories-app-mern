@@ -16,7 +16,7 @@ const Navbar = () => {
 	const [user, setUser] = useState(getUserData);
 
 	useEffect(() => {
-		const token = user?.token;
+		// const token = user?.token;
 		setUser(getUserData);
 	}, [location]);
 
