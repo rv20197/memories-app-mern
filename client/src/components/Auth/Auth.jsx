@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Avatar,
 	Button,
@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 
 import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -18,10 +19,21 @@ import useStyles from './Auth-styles';
 
 const Auth = () => {
 	const GOOGLE_CLIENT_ID =
-		'436240735931-j3fmpbdijgu07sqf2n7qk6r77b7bqls6.apps.googleusercontent.com';
+		'436240735931-ojsalitcfccqujidpog7q1asdli7hn9p.apps.googleusercontent.com';
+	const GOOGLE_CLIENT_SECRET = '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';
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignUp, setIsSignUp] = useState(false);
+
+	useEffect(() => {
+		const start = () => {
+			gapi.auth2.init({
+				clientId: GOOGLE_CLIENT_ID,
+				scope: ''
+			});
+		};
+		gapi.load('client:auth2', start);
+	});
 
 	const classes = useStyles();
 
@@ -38,11 +50,13 @@ const Auth = () => {
 		setShowPassword(false);
 	};
 
-	const googleSuccessHandler = res => {
-		console.log(res);
+	const googleSuccessHandler = async res => {
+		const response = await res;
+		console.log(response);
 	};
 
-	const googleFailureHandler = () => {
+	const googleFailureHandler = error => {
+		console.error(error);
 		console.error('Google Sign In Failed. Try Again Later');
 	};
 
@@ -98,24 +112,6 @@ const Auth = () => {
 							/>
 						)}
 					</Grid>
-					<GoogleLogin
-						clientId={GOOGLE_CLIENT_ID}
-						render={renderProps => {
-							<Button
-								className={classes.googleButton}
-								color='primary'
-								variant='contained'
-								fullWidth
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-								startIcon={<Icon />}>
-								Google Sign In
-							</Button>;
-						}}
-						onSuccess={googleSuccessHandler}
-						onFailure={googleFailureHandler}
-						cookiePolicy='single_host_origin'
-					/>
 					<Button
 						type='submit'
 						fullWidth
@@ -124,6 +120,28 @@ const Auth = () => {
 						className={classes.submit}>
 						{isSignUp ? 'Sign Up' : 'Sign In'}
 					</Button>
+
+					<div id='signInButton'>
+						<GoogleLogin
+							clientId={GOOGLE_CLIENT_ID}
+							render={renderProps => (
+								<Button
+									className={classes.googleButton}
+									color='primary'
+									fullWidth
+									onClick={renderProps.onClick}
+									disabled={renderProps.disabled}
+									startIcon={<Icon />}
+									variant='contained'>
+									Google Sign In
+								</Button>
+							)}
+							onSuccess={googleSuccessHandler}
+							onFailure={googleFailureHandler}
+							cookiePolicy='single_host_origin'
+						/>
+					</div>
+
 					<Grid container justifyContent='flex-end'>
 						<Grid item>
 							<Button onClick={switchModeHandler}>
