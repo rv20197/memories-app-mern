@@ -1,25 +1,39 @@
 import axios from 'axios';
 
 // const url = 'https://memories-express-rest-backend.herokuapp.com/posts';
-const url = 'http://localhost:5000/posts';
 
+const BASE_URL = 'http://localhost:5000';
+
+const API = axios.create({ baseURL: BASE_URL });
+
+const postsURL = '/posts';
 
 export const fetchPosts = () => {
-	return axios.get(url);
+	return API.get(postsURL);
 };
 
 export const createPost = newPost => {
-	return axios.post(url, newPost);
+	return API.post(postsURL, newPost);
 };
 
 export const updatePost = (id, updatedPost) => {
-	return axios.patch(`${url}/${id}`, updatedPost);
+	return API.patch(`${postsURL}/${id}`, updatedPost);
 };
 
 export const deletePost = id => {
-	return axios.delete(`${url}/${id}`);
+	return API.delete(`${postsURL}/${id}`);
 };
 
 export const likePost = id => {
-	return axios.patch(`${url}/${id}/likePost`);
+	return API.patch(`${postsURL}/${id}/likePost`);
+};
+
+const usersURL = '/user';
+
+export const signIn = formData => {
+	return API.post(`${usersURL}/signin`, formData);
+};
+
+export const signUp = formData => {
+	return API.post(`${usersURL}/signup`, formData);
 };
