@@ -6,6 +6,15 @@ const BASE_URL = 'http://localhost:5000';
 
 const API = axios.create({ baseURL: BASE_URL });
 
+API.interceptors.request.use(req => {
+	const profile = JSON.parse(localStorage.getItem('profile'));
+	if (profile) {
+		req.headers.Authorization = `Bearer ${profile.token}`;
+	}
+
+	return req;
+});
+
 const postsURL = '/posts';
 
 export const fetchPosts = () => {
