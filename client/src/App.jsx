@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
+import { Container, Grow, Grid } from '@material-ui/core';
 
+import Navbar from './components/Navbar/Navbar';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import { getPosts } from './redux/actions/post-action';
 
-import useclasses from './App-styles';
-import memories from './assets/images/memories.png';
+import useStyles from './App-styles';
 
 function App() {
 	const [currentPostId, setCurrentPostId] = useState(null);
 
 	const dispatch = useDispatch();
-	const classes = useclasses();
+	const classes = useStyles();
 
 	useEffect(() => {
 		dispatch(getPosts());
@@ -22,17 +22,7 @@ function App() {
 
 	return (
 		<Container maxWidth='lg'>
-			<AppBar position='static' color='inherit' className={classes.appBar}>
-				<img
-					src={memories}
-					alt='memories'
-					height='60'
-					className={classes.image}
-				/>
-				<Typography variant='h2' align='center' className={classes.heading}>
-					Memories
-				</Typography>
-			</AppBar>
+			<Navbar />
 			<Grow in>
 				<Container>
 					<Grid

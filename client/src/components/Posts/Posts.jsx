@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, CircularProgress,Typography } from '@material-ui/core';
+import { Grid,  Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import Post from './Post/Post';
