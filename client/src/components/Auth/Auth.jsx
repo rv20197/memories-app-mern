@@ -7,23 +7,28 @@ import {
 	Typography,
 	Container
 } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import AuthInput from './AuthInput';
 import Icon from './Icon';
 import useStyles from './Auth-styles';
+import { AUTH } from '../../constants/actionTypes';
 
 const Auth = () => {
 	const GOOGLE_CLIENT_ID =
 		'436240735931-ojsalitcfccqujidpog7q1asdli7hn9p.apps.googleusercontent.com';
-	const GOOGLE_CLIENT_SECRET = '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';
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignUp, setIsSignUp] = useState(false);
+
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	useEffect(() => {
 		const start = () => {
@@ -51,8 +56,15 @@ const Auth = () => {
 	};
 
 	const googleSuccessHandler = async res => {
-		const response = await res;
-		console.log(response);
+		try {
+			const result = res?.profileObj;
+			const token = res?.tokenId;
+			const action = { type: AUTH, payload: { result, token } };
+			dispatch(action);
+			history.push('/');
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const googleFailureHandler = error => {
