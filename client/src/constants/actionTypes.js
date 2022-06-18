@@ -5,3 +5,5 @@ export const DELETE_POST = 'DELETE_POST';
 
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+export const SIGNUP = 'SIGNUP';
+export const SIGNIN = 'SIGNIN';

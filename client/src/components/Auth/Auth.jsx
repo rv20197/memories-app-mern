@@ -19,6 +19,15 @@ import AuthInput from './AuthInput';
 import Icon from './Icon';
 import useStyles from './Auth-styles';
 import { AUTH } from '../../constants/actionTypes';
+import { signUp, signIn } from '../../redux/actions/auth-action';
+
+const initialFormState = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	confirmPassword: ''
+};
 
 const Auth = () => {
 	const GOOGLE_CLIENT_ID =
@@ -26,6 +35,7 @@ const Auth = () => {
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignUp, setIsSignUp] = useState(false);
+	const [formData, setFormData] = useState(initialFormState);
 
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -42,9 +52,18 @@ const Auth = () => {
 
 	const classes = useStyles();
 
-	const submitHandler = () => {};
+	const submitHandler = e => {
+		e.preventDefault();
+		if (isSignUp) {
+			dispatch(signUp(formData, history));
+		} else {
+			dispatch(signIn(formData, history));
+		}
+	};
 
-	const changeHandler = () => {};
+	const changeHandler = e => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const showPasswordHandler = () => {
 		setShowPassword(prevShowPassword => !prevShowPassword);
