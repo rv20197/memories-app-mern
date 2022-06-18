@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 import postRoutes from './routes/posts-routes.js';
 
+const PORT = process.env.PORT || 5000;
+
 const app = express();
 dotenv.config();
 
@@ -25,8 +27,6 @@ mongoose
 		useUnifiedTopology: true
 	})
 	.then(() =>
-		app.listen(process.env.PORT, () =>
-			console.log(`Server is running on port: ${process.env.PORT}`)
-		)
+		app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))
 	)
 	.catch(err => console.error(err.message));
