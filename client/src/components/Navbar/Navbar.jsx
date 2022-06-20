@@ -6,7 +6,9 @@ import decode from 'jwt-decode';
 
 import { AppBar, Avatar, Button, Toolbar, Typography } from '@material-ui/core';
 import useStyles from './Navbar-styles';
-import memories from '../../assets/images/memories.png';
+
+import memoriesText from '../../assets/images/memories.png';
+import memoriesLogo from '../../assets/images/Logo.png';
 
 const Navbar = () => {
 	const classes = useStyles();
@@ -37,22 +39,20 @@ const Navbar = () => {
 
 	return (
 		<AppBar position='static' color='inherit' className={classes.appBar}>
-			<div className={classes.brandContainer}>
+			<Link to='/' className={classes.brandContainer}>
 				<img
-					src={memories}
+					src={memoriesText}
 					alt='memories'
-					height='60'
+					height='45'
 					className={classes.image}
 				/>
-				<Typography
-					component={Link}
-					to='/'
-					variant='h2'
-					align='center'
-					className={classes.heading}>
-					Memories
-				</Typography>
-			</div>
+				<img
+					src={memoriesLogo}
+					alt='memories'
+					height='40'
+					className={classes.image}
+				/>
+			</Link>
 			<Toolbar className={classes.toolbar}>
 				{user ? (
 					<div className={classes.profile}>
