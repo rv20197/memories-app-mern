@@ -3,13 +3,19 @@ import {
 	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
-	DELETE_POST
+	DELETE_POST,
+	START_LOADING,
+	STOP_LOADING
 } from '../../../constants/actionTypes';
 
-const initialState = [];
+const initialState = { isLoading: true, posts: [] };
 
 const postsReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
+		case START_LOADING:
+			return { ...state, isLoading: true };
+		case STOP_LOADING:
+			return { ...state, isLoading: false };
 		case FETCH_POSTS:
 			return {
 				...state,
@@ -20,11 +26,19 @@ const postsReducer = (state = initialState, { type, payload }) => {
 		case FETCH_POSTS_BY_SEARCH:
 			return { ...state, posts: payload };
 		case CREATE_POST:
-			return { ...state, ...payload };
+			return { ...state, posts: [...state.posts, payload] };
 		case UPDATE_POST:
-			return state.map(post => (post._id === payload._id ? payload : post));
+			return {
+				...state,
+				posts: state.posts.map(post =>
+					post._id === payload._id ? payload : post
+				)
+			};
 		case DELETE_POST:
-			return state.filter(post => post._id !== payload);
+			return {
+				...state,
+				posts: state.posts.filter(post => post._id !== payload)
+			};
 		default:
 			return state;
 	}

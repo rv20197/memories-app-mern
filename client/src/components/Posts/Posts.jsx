@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Typography } from '@material-ui/core';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import Post from './Post/Post';
@@ -8,11 +8,14 @@ import useStyles from './Posts-styles';
 
 const Posts = ({ setCurrentPostId }) => {
 	const classes = useStyles();
-	const { posts } = useSelector(state => state.posts);
+	const { posts, isLoading } = useSelector(state => state.posts);
+	if (!posts.length && !isLoading) {
+		return <Typography variant='h3'>No Posts Found!</Typography>;
+	}
 	return (
 		<>
-			{!posts?.length ? (
-				<Typography variant='h3'>No Posts Found!</Typography>
+			{isLoading ? (
+				<CircularProgress />
 			) : (
 				<Grid
 					className={classes.mainContainer}

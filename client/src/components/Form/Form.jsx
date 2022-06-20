@@ -19,7 +19,9 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 	});
 
 	const post = useSelector(state =>
-		currentPostId ? state.posts.find(post => post._id === currentPostId) : null
+		currentPostId
+			? state.posts.posts.find(post => post._id === currentPostId)
+			: null
 	);
 
 	useEffect(() => {
@@ -55,7 +57,7 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 
 	if (!user?.result?.name) {
 		return (
-			<Paper className={classes.paper}>
+			<Paper className={classes.paper} elevation={6}>
 				<Typography variant='h6' align='center'>
 					Please SignIn To Create or Like Posts
 				</Typography>
@@ -64,7 +66,7 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 	}
 
 	return (
-		<Paper className={classes.paper}>
+		<Paper className={classes.paper} elevation={6}>
 			<form
 				autoComplete='off'
 				noValidate

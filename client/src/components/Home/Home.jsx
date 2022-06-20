@@ -111,9 +111,11 @@ const Home = () => {
 							currentPostId={currentPostId}
 							setCurrentPostId={setCurrentPostId}
 						/>
-						<Paper elevation={6} className={classes.pagination}>
-							<Paginate page={page} />
-						</Paper>
+						{!searchQuery && !tags.length && (
+							<Paper elevation={6} className={classes.pagination}>
+								<Paginate page={page} />
+							</Paper>
+						)}
 					</Grid>
 				</Grid>
 			</Container>
