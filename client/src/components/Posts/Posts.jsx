@@ -8,11 +8,10 @@ import useStyles from './Posts-styles';
 
 const Posts = ({ setCurrentPostId }) => {
 	const classes = useStyles();
-
-	const posts = useSelector(state => state.posts);
+	const { posts } = useSelector(state => state.posts);
 	return (
 		<>
-			{!posts.length ? (
+			{!posts?.length ? (
 				<Typography variant='h3'>No Posts Found!</Typography>
 			) : (
 				<Grid

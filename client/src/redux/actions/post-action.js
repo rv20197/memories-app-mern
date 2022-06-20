@@ -8,10 +8,13 @@ import {
 	DELETE_POST
 } from '../../constants/actionTypes';
 
-export const getPosts = () => async dispatch => {
+export const getPosts = page => async dispatch => {
 	try {
-		const { data } = await api.fetchPosts();
-		const action = { type: FETCH_POSTS, payload: data };
+		const { data } = await api.fetchPosts(page);
+		const action = {
+			type: FETCH_POSTS,
+			payload: data
+		};
 		dispatch(action);
 	} catch (error) {
 		console.error(error);

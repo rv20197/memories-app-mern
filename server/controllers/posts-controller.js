@@ -4,7 +4,7 @@ import PostMessage from '../models/postsMessage-model.js';
 export const getPosts = async (req, res, next) => {
 	const { page } = req.query;
 	try {
-		const LIMIT = 10;
+		const LIMIT = 8;
 		const startIndex = (Number(page) - 1) * LIMIT; // get starting index of every page;
 
 		const total = await PostMessage.countDocuments({});
@@ -14,13 +14,11 @@ export const getPosts = async (req, res, next) => {
 			.limit(LIMIT)
 			.skip(startIndex);
 
-		res
-			.status(200)
-			.json({
-				data: posts,
-				currentPage: +page,
-				numberOfPages: Math.ceil(total / LIMIT)
-			});
+		res.status(200).json({
+			data: posts,
+			currentPage: +page,
+			numberOfPages: Math.ceil(total / LIMIT)
+		});
 	} catch (error) {
 		res.status(404).json({ message: error.message });
 	}

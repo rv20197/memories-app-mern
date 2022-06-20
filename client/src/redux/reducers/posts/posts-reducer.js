@@ -11,11 +11,16 @@ const initialState = [];
 const postsReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case FETCH_POSTS:
-			return [...payload];
+			return {
+				...state,
+				posts: payload.data,
+				currentPage: payload.currentPage,
+				numberOfPages: payload.numberOfPages
+			};
 		case FETCH_POSTS_BY_SEARCH:
-			return [...payload];
+			return { ...state, posts: payload };
 		case CREATE_POST:
-			return [...state, { ...payload }];
+			return { ...state, ...payload };
 		case UPDATE_POST:
 			return state.map(post => (post._id === payload._id ? payload : post));
 		case DELETE_POST:
