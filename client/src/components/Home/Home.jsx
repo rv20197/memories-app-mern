@@ -42,29 +42,25 @@ const Home = () => {
 		dispatch(getPosts());
 	}, [currentPostId, dispatch]);
 
-	const searchHandler = e => {
-		return setSearch(e.target.value);
-	};
+	const searchHandler = e => setSearch(e.target.value);
 
 	const keyPressHandler = e => {
-		if (e.key === 'Enter') {
-			// Search Post
+		if (e.keyCode === 13) {
 			searchPostHandler();
 		}
 	};
 
 	const tagAddHandler = tagToAdd => setTags([...tags, tagToAdd]);
 
-	const tagDeleteHandler = tagToDelete => () => {
+	const tagDeleteHandler = tagToDelete => () =>
 		setTags(tags.filter(tag => tag !== tagToDelete));
-		console.log(tags);
-	};
 
 	const searchPostHandler = () => {
-		console.log(tags.join(','));
-		if (search.trim()) {
-			//dispatch logic to fetch search post
+		if (search.trim() || tags) {
 			dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
+			// history.push(
+			// 	`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`
+			// );
 		} else {
 			history.push('/');
 		}
@@ -105,6 +101,7 @@ const Home = () => {
 								label='Search Tags'
 								variant='outlined'
 							/>
+
 							<Button
 								onClick={searchPostHandler}
 								className={classes.searchButton}
