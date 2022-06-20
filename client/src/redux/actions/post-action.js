@@ -2,6 +2,7 @@ import * as api from '../../api/index';
 
 import {
 	FETCH_POSTS,
+	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
 	DELETE_POST
@@ -22,9 +23,8 @@ export const getPostsBySearch = searchQuery => async dispatch => {
 		const {
 			data: { data }
 		} = await api.fetchPostsBySearch(searchQuery);
-		console.log(data);
-		// const action = { type: FETCH_POSTS, payload: data };
-		// dispatch(action);
+		const action = { type: FETCH_POSTS_BY_SEARCH, payload: data };
+		dispatch(action);
 	} catch (error) {
 		console.error(error);
 	}

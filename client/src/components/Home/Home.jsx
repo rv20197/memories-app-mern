@@ -52,15 +52,15 @@ const Home = () => {
 
 	const tagAddHandler = tagToAdd => setTags([...tags, tagToAdd]);
 
-	const tagDeleteHandler = tagToDelete => () =>
+	const tagDeleteHandler = tagToDelete =>
 		setTags(tags.filter(tag => tag !== tagToDelete));
 
 	const searchPostHandler = () => {
 		if (search.trim() || tags) {
 			dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-			// history.push(
-			// 	`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`
-			// );
+			history.push(
+				`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`
+			);
 		} else {
 			history.push('/');
 		}
@@ -96,10 +96,10 @@ const Home = () => {
 							<ChipInput
 								style={{ margin: '10px 0' }}
 								value={tags}
-								onAdd={chip => tagAddHandler(chip)}
-								onDelete={chip => tagDeleteHandler(chip)}
 								label='Search Tags'
 								variant='outlined'
+								onAdd={chip => tagAddHandler(chip)}
+								onDelete={chip => tagDeleteHandler(chip)}
 							/>
 
 							<Button
