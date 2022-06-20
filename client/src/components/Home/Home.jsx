@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import {
+	Grow,
+	Grid,
+	Container,
+	Paper,
+	AppBar,
+	TextField,
+	Button,
+	Chip
+} from '@material-ui/core';
+
+import { Autocomplete } from '@material-ui/lab';
+import { useHistory, useLocation } from 'react-router-dom';
+
 import { getPosts } from '../../redux/actions/post-action';
-import { Grow, Grid, Container, Paper } from '@material-ui/core';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
@@ -9,34 +22,121 @@ import Paginate from '../Paginate/Paginate';
 
 import useStyles from './Home-styles';
 
+const useQuery = () => {
+	return new URLSearchParams(useLocation().search);
+};
+
 const Home = () => {
 	const classes = useStyles();
 	const [currentPostId, setCurrentPostId] = useState(null);
+	const [search, setSearch] = useState('');
+	const [tags, setTags] = useState([]);
 
 	const dispatch = useDispatch();
+	const query = useQuery();
+	const history = useHistory();
+	const page = query.get('page') || 1;
+	const searchQuery = query.get('searchQuery');
 
 	useEffect(() => {
 		dispatch(getPosts());
 	}, [currentPostId, dispatch]);
 
+	const searchHandler = e => {
+		return setSearch(e.target.value);
+	};
+
+	const keyPressHandler = e => {
+		if (e.key === 'Enter') {
+			// Search Post
+			searchPostHandler();
+		}
+	};
+
+	const tagAddHandler = tagToAdd => {
+		setTags([...tags, tagToAdd]);
+		console.log(tags);
+	};
+
+	const tagDeleteHandler = tagToDelete => {
+		setTags(tags.filter(tag => tag !== tagToDelete));
+		console.log(tags);
+	};
+
+	const searchPostHandler = () => {
+		if (search.trim()) {
+			//dispatch logic to fetch search post
+		} else {
+			history.push('/');
+		}
+	};
+
 	return (
 		<Grow in>
-			<Container>
+			<Container maxWidth='xl'>
 				<Grid
 					container
-					className={classes.mainContainer}
+					className={classes.gridContainer}
 					justifyContent='space-between'
 					alignItems='stretch'
 					spacing={4}>
-					<Grid item xs={12} sm={7}>
+					<Grid item xs={12} sm={6} md={9}>
 						<Posts setCurrentPostId={setCurrentPostId} />
 					</Grid>
-					<Grid item xs={12} sm={4}>
+					<Grid item xs={12} sm={6} md={3}>
+						<AppBar
+							className={classes.appBarSearch}
+							position='static'
+							color='inherit'>
+							<TextField
+								name='search'
+								variant='outlined'
+								label='Search Memories'
+								fullWidth
+								value={search}
+								onChange={searchHandler}
+								onKeyPress={keyPressHandler}
+							/>
+
+							<Autocomplete
+								style={{ margin: '10px 0' }}
+								multiple
+								id='tags-filled'
+								options={[]}
+								defaultValue={[]}
+								onChange={(e, value) => tagAddHandler(value)}
+								freeSolo
+								renderTags={(value, getTagProps) =>
+									value.map((option, index) => (
+										<Chip
+											variant='outlined'
+											label={option}
+											{...getTagProps({ index })}
+										/>
+									))
+								}
+								renderInput={params => (
+									<TextField
+										{...params}
+										variant='outlined'
+										label='Search Tags'
+									/>
+								)}
+							/>
+							<Button
+								onClick={searchPostHandler}
+								className={classes.searchButton}
+								color='primary'
+								variant='contained'>
+								Search
+							</Button>
+						</AppBar>
+
 						<Form
 							currentPostId={currentPostId}
 							setCurrentPostId={setCurrentPostId}
 						/>
-						<Paper elevation={6}>
+						<Paper elevation={6} className={classes.pagination}>
 							<Paginate />
 						</Paper>
 					</Grid>
