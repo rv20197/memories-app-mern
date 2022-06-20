@@ -7,14 +7,14 @@ import {
 	Paper,
 	AppBar,
 	TextField,
-	Button,
-	Chip
+	Button
 } from '@material-ui/core';
 
-import { Autocomplete } from '@material-ui/lab';
+import ChipInput from 'material-ui-chip-input';
+
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { getPosts } from '../../redux/actions/post-action';
+import { getPosts, getPostsBySearch } from '../../redux/actions/post-action';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
@@ -53,19 +53,18 @@ const Home = () => {
 		}
 	};
 
-	const tagAddHandler = tagToAdd => {
-		setTags([...tags, tagToAdd]);
-		console.log(tags);
-	};
+	const tagAddHandler = tagToAdd => setTags([...tags, tagToAdd]);
 
-	const tagDeleteHandler = tagToDelete => {
+	const tagDeleteHandler = tagToDelete => () => {
 		setTags(tags.filter(tag => tag !== tagToDelete));
 		console.log(tags);
 	};
 
 	const searchPostHandler = () => {
+		console.log(tags.join(','));
 		if (search.trim()) {
 			//dispatch logic to fetch search post
+			dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
 		} else {
 			history.push('/');
 		}
@@ -98,30 +97,13 @@ const Home = () => {
 								onKeyPress={keyPressHandler}
 							/>
 
-							<Autocomplete
+							<ChipInput
 								style={{ margin: '10px 0' }}
-								multiple
-								id='tags-filled'
-								options={[]}
-								defaultValue={[]}
-								onChange={(e, value) => tagAddHandler(value)}
-								freeSolo
-								renderTags={(value, getTagProps) =>
-									value.map((option, index) => (
-										<Chip
-											variant='outlined'
-											label={option}
-											{...getTagProps({ index })}
-										/>
-									))
-								}
-								renderInput={params => (
-									<TextField
-										{...params}
-										variant='outlined'
-										label='Search Tags'
-									/>
-								)}
+								value={tags}
+								onAdd={chip => tagAddHandler(chip)}
+								onDelete={chip => tagDeleteHandler(chip)}
+								label='Search Tags'
+								variant='outlined'
 							/>
 							<Button
 								onClick={searchPostHandler}

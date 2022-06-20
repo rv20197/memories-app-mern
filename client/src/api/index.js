@@ -21,6 +21,14 @@ export const fetchPosts = () => {
 	return API.get(postsURL);
 };
 
+export const fetchPostsBySearch = searchQuery => {
+	return API.get(
+		`${postsURL}/search?searchQuery=${searchQuery.search || 'none'}&tags=${
+			searchQuery.tags
+		}`
+	);
+};
+
 export const createPost = newPost => {
 	return API.post(postsURL, newPost);
 };
