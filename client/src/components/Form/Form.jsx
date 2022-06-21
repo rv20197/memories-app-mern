@@ -5,10 +5,12 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './Form-styles';
 import { createPost, updatePost } from '../../redux/actions/post-action';
+import { useHistory } from 'react-router-dom';
 
 const Form = ({ currentPostId, setCurrentPostId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const user = JSON.parse(localStorage.getItem('profile'));
 
 	const [postData, setPostData] = useState({
@@ -33,13 +35,14 @@ const Form = ({ currentPostId, setCurrentPostId }) => {
 	const submitHandler = e => {
 		e.preventDefault();
 		if (!currentPostId) {
-			dispatch(createPost({ ...postData, name: user?.result?.name }));
+			dispatch(createPost({ ...postData, name: user?.result?.name }, history));
+			clearFormHandler();
 		} else {
 			dispatch(
 				updatePost(currentPostId, { ...postData, name: user?.result?.name })
 			);
+			clearFormHandler();
 		}
-		clearFormHandler();
 	};
 
 	const fileUploadHandler = ({ base64 }) =>

@@ -8,8 +8,7 @@ import {
 	CardMedia,
 	Button,
 	Typography,
-	CardActionArea
-} from '@material-ui/core';
+	ButtonBase} from '@material-ui/core';
 
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
@@ -42,6 +41,14 @@ const Post = ({ post, setCurrentPostId }) => {
 		dispatch(deletePost(post._id));
 	};
 
+	const openPostHandler = () => {
+		if (user) {
+			history.push(`/posts/${post._id}`);
+		} else {
+			history.push(`/posts`);
+		}
+	};
+
 	const Likes = () => {
 		if (post.likes.length > 0) {
 			return post.likes.find(
@@ -70,11 +77,13 @@ const Post = ({ post, setCurrentPostId }) => {
 		);
 	};
 
-	const openPostHandler = () => history.push(`/posts/${post._id}`);
-
 	return (
 		<Card className={classes.card} raised elevation={6}>
-			<CardActionArea onClick={openPostHandler}>
+			<ButtonBase
+				component='span'
+				name='test'
+				className={classes.cardAction}
+				onClick={openPostHandler}>
 				<CardMedia
 					className={classes.media}
 					image={post.selectedFile}
@@ -88,17 +97,20 @@ const Post = ({ post, setCurrentPostId }) => {
 					</Typography>
 				</div>
 
-				<div className={classes.overlay2}>
-					{(user?.result?.googleId === post?.creator ||
-						user?.result?._id === post?.creator) && (
+				{(user?.result?.googleId === post?.creator ||
+					user?.result?._id === post?.creator) && (
+					<div className={classes.overlay2} name='edit'>
 						<Button
+							onClick={e => {
+								e.stopPropagation();
+								updatePostHandler();
+							}}
 							style={{ color: 'white' }}
-							size='small'
-							onClick={updatePostHandler}>
+							size='small'>
 							<MoreHorizIcon fontSize='medium' />
 						</Button>
-					)}
-				</div>
+					</div>
+				)}
 
 				<div className={classes.details}>
 					<Typography variant='body2' color='textSecondary'>
@@ -115,7 +127,7 @@ const Post = ({ post, setCurrentPostId }) => {
 						{post.message}
 					</Typography>
 				</CardContent>
-			</CardActionArea>
+			</ButtonBase>
 
 			<CardActions className={classes.cardActions}>
 				<Button
