@@ -2,6 +2,7 @@ import * as api from '../../api/index';
 
 import {
 	FETCH_POSTS,
+	FETCH_POST,
 	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
@@ -16,6 +17,21 @@ export const getPosts = page => async dispatch => {
 		const { data } = await api.fetchPosts(page);
 		const action = {
 			type: FETCH_POSTS,
+			payload: data
+		};
+		dispatch(action);
+		dispatch({ type: STOP_LOADING });
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const getPost = id => async dispatch => {
+	try {
+		dispatch({ type: START_LOADING });
+		const { data } = await api.fetchPostById(id);
+		const action = {
+			type: FETCH_POST,
 			payload: data
 		};
 		dispatch(action);

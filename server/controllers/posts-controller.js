@@ -24,6 +24,19 @@ export const getPosts = async (req, res, next) => {
 	}
 };
 
+export const getPostById = async (req, res, next) => {
+	const { id: _id } = req.params;
+	try {
+		if (!mongoose.Types.ObjectId.isValid(_id)) {
+			return res.status(404).json({ message: 'No Post found with that Id' });
+		}
+		const post = await PostMessage.findById(_id);
+		res.status(200).json(post);
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};
+
 export const getPostsBySearch = async (req, res, next) => {
 	const { searchQuery, tags } = req.query;
 
@@ -60,7 +73,7 @@ export const updatePost = async (req, res, next) => {
 		const post = req.body;
 
 		if (!mongoose.Types.ObjectId.isValid(_id)) {
-			return res.status(404).send({ message: 'No Post found with that Id' });
+			return res.status(404).json({ message: 'No Post found with that Id' });
 		}
 
 		const updatedPost = await PostMessage.findByIdAndUpdate(
@@ -82,7 +95,7 @@ export const deletePost = async (req, res, next) => {
 		const { id: _id } = req.params;
 
 		if (!mongoose.Types.ObjectId.isValid(_id)) {
-			return res.status(404).send({ message: 'No Post found with that Id' });
+			return res.status(404).json({ message: 'No Post found with that Id' });
 		}
 
 		await PostMessage.findByIdAndRemove(_id);
@@ -101,7 +114,7 @@ export const likePost = async (req, res, next) => {
 		}
 
 		if (!mongoose.Types.ObjectId.isValid(_id)) {
-			return res.status(404).send({ message: 'No Post found with that Id' });
+			return res.status(404).json({ message: 'No Post found with that Id' });
 		}
 
 		const post = await PostMessage.findById(_id);

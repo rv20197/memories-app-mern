@@ -1,5 +1,6 @@
 import {
 	FETCH_POSTS,
+	FETCH_POST,
 	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
@@ -23,6 +24,8 @@ const postsReducer = (state = initialState, { type, payload }) => {
 				currentPage: payload.currentPage,
 				numberOfPages: payload.numberOfPages
 			};
+		case FETCH_POST:
+			return { ...state, post: payload };
 		case FETCH_POSTS_BY_SEARCH:
 			return { ...state, posts: payload };
 		case CREATE_POST:

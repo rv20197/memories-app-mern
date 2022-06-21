@@ -21,6 +21,10 @@ export const fetchPosts = page => {
 	return API.get(`${postsURL}?page=${page}`);
 };
 
+export const fetchPostById = id => {
+	return API.get(`${postsURL}/${id}`);
+};
+
 export const fetchPostsBySearch = searchQuery => {
 	return API.get(
 		`${postsURL}/search?searchQuery=${searchQuery.search || 'none'}&tags=${
