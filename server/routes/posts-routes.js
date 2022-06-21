@@ -17,10 +17,10 @@ const router = express.Router();
 router.get('/', getPosts);
 
 // GET: http://localhost:5000/posts/search
-router.get('/:id', isAuth, getPostById);
-
-// GET: http://localhost:5000/posts/search
 router.get('/search', isAuth, getPostsBySearch);
+
+// GET: http://localhost:5000/posts/:id
+router.get('/:id', isAuth, getPostById);
 
 // POST: http://localhost:5000/posts
 router.post('/', isAuth, createPost);

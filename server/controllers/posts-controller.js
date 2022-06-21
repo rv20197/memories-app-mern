@@ -24,19 +24,6 @@ export const getPosts = async (req, res, next) => {
 	}
 };
 
-export const getPostById = async (req, res, next) => {
-	const { id: _id } = req.params;
-	try {
-		if (!mongoose.Types.ObjectId.isValid(_id)) {
-			return res.status(404).json({ message: 'No Post found with that Id' });
-		}
-		const post = await PostMessage.findById(_id);
-		res.status(200).json(post);
-	} catch (error) {
-		res.status(404).json({ message: error.message });
-	}
-};
-
 export const getPostsBySearch = async (req, res, next) => {
 	const { searchQuery, tags } = req.query;
 
@@ -47,6 +34,19 @@ export const getPostsBySearch = async (req, res, next) => {
 			$or: [{ title }, { tags: { $in: tags.split(',') } }]
 		});
 		res.status(200).json({ data: posts });
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};
+
+export const getPostById = async (req, res, next) => {
+	const { id: _id } = req.params;
+	try {
+		if (!mongoose.Types.ObjectId.isValid(_id)) {
+			return res.status(404).json({ message: 'No Post found with that Id' });
+		}
+		const post = await PostMessage.findById(_id);
+		res.status(200).json(post);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
 	}
