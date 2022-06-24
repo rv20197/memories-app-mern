@@ -49,6 +49,10 @@ export const likePost = id => {
 	return API.patch(`${postsURL}/${id}/likePost`);
 };
 
+export const comment = (finalComment, postId) => {
+	return API.post(`${postsURL}/${postId}/commentPost`, { finalComment });
+};
+
 const usersURL = '/user';
 
 export const signIn = formData => {

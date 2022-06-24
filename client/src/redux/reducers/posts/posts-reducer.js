@@ -4,6 +4,7 @@ import {
 	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
+	COMMENT_POST,
 	DELETE_POST,
 	START_LOADING,
 	STOP_LOADING
@@ -36,6 +37,11 @@ const postsReducer = (state = initialState, { type, payload }) => {
 				posts: state.posts.map(post =>
 					post._id === payload._id ? payload : post
 				)
+			};
+		case COMMENT_POST:
+			return {
+				...state,
+				post: { ...payload }
 			};
 		case DELETE_POST:
 			return {

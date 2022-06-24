@@ -4,14 +4,23 @@ import { useDispatch } from 'react-redux';
 import { Typography, TextField, Button } from '@material-ui/core';
 import useStyles from './CommentSection-styles';
 
+import { commentPost } from '../../../redux/actions/post-action';
+
 const CommentSection = ({ post }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
 	const [comments, setComments] = useState([1, 2, 3, 4, 5]);
 	const [comment, setComment] = useState('');
 
+	const user = JSON.parse(localStorage.getItem('user'));
+
 	const commentInputHandler = e => setComment(e.target.value);
 
-	const commentSubmitHandler = () => {};
+	const commentSubmitHandler = () => {
+		const finalComment = `${user.result.name}: ${comment}`;
+		dispatch(commentPost(finalComment, post._id));
+	};
 	return (
 		<>
 			<div className={classes.commentsOuterContainer}>
@@ -44,6 +53,7 @@ const CommentSection = ({ post }) => {
 						fullWidth
 						disabled={!comment}
 						variant='contained'
+						color='primary'
 						onClick={commentSubmitHandler}>
 						Comment
 					</Button>

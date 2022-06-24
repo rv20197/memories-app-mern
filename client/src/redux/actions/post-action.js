@@ -6,6 +6,7 @@ import {
 	FETCH_POSTS_BY_SEARCH,
 	CREATE_POST,
 	UPDATE_POST,
+	COMMENT_POST,
 	DELETE_POST,
 	START_LOADING,
 	STOP_LOADING
@@ -82,6 +83,16 @@ export const likePost = id => async dispatch => {
 	try {
 		const { data } = await api.likePost(id);
 		const action = { type: UPDATE_POST, payload: data };
+		dispatch(action);
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const commentPost = (finalComment, postId) => async dispatch => {
+	try {
+		const { data } = await api.comment(finalComment, postId);
+		const action = { type: COMMENT_POST, payload: data };
 		dispatch(action);
 	} catch (error) {
 		console.error(error);
