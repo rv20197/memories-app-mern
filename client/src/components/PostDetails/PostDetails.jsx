@@ -7,16 +7,19 @@ import {
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { getPost, getPostsBySearch } from '../../redux/actions/post-action';
 
+import CommentSection from './CommentSection/CommentSection';
+
 import useStyles from './PostDetails-styles';
+import RelatedPosts from './RelatedPosts/RelatedPosts';
 
 const PostDetails = () => {
 	const { post, posts, isLoading } = useSelector(state => state.posts);
 	const dispatch = useDispatch();
-	const history = useHistory();
+
 	const classes = useStyles();
 	const { id } = useParams();
 
@@ -49,10 +52,6 @@ const PostDetails = () => {
 	if (recommendedPosts.length === 0) {
 	}
 
-	const openPostHandler = postId => {
-		history.push(`/posts/${postId}`);
-	};
-
 	return (
 		<>
 			<Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
@@ -76,9 +75,7 @@ const PostDetails = () => {
 							{moment(post.createdAt).fromNow()}
 						</Typography>
 						<Divider style={{ margin: '20px 0' }} />
-						<Typography variant='body1'>
-							<strong>Comments - coming soon!</strong>
-						</Typography>
+						<CommentSection post={post} />
 						<Divider style={{ margin: '20px 0' }} />
 					</div>
 					<div className={classes.imageSection}>
@@ -93,54 +90,8 @@ const PostDetails = () => {
 					</div>
 				</div>
 			</Paper>
-			<Paper
-				elevation={6}
-				style={{ padding: '20px', borderRadius: '15px', marginTop: '1rem' }}>
-				{recommendedPosts.length === 0 ? (
-					<Typography gutterBottom variant='h6'>
-						No Posts Found Matching Your Interest
-					</Typography>
-				) : (
-					<div className={classes.section}>
-						<Typography gutterBottom variant='h5'>
-							You might also like:
-						</Typography>
-						<Divider />
-						<div className={classes.recommendedPosts}>
-							{recommendedPosts.map(
-								({ title, message, name, likes, selectedFile, _id }) => (
-									<div
-										key={_id}
-										style={{ margin: '20px', cursor: 'pointer' }}
-										onClick={() => openPostHandler(_id)}>
-										<Typography gutterBottom variant='h6'>
-											{title}
-										</Typography>
-										<Typography gutterBottom variant='subtitle2'>
-											{name}
-										</Typography>
-										<Typography gutterBottom variant='subtitle2'>
-											{message}
-										</Typography>
-										<Typography gutterBottom variant='subtitle1'>
-											Likes: {likes.length}
-										</Typography>
-										<img
-											style={{
-												width: '200px',
-												borderRadius: '10px',
-												objectFit: 'cover'
-											}}
-											src={selectedFile}
-											alt={title}
-										/>
-									</div>
-								)
-							)}
-						</div>
-					</div>
-				)}
-			</Paper>
+
+			<RelatedPosts classes={classes} recommendedPosts={recommendedPosts} />
 		</>
 	);
 };
