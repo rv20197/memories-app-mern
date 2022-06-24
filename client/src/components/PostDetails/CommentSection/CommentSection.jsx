@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Typography, TextField, Button } from '@material-ui/core';
@@ -9,6 +9,7 @@ import { commentPost } from '../../../redux/actions/post-action';
 const CommentSection = ({ post }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const commentsRef = useRef();
 
 	const [comments, setComments] = useState(post?.comments);
 	const [comment, setComment] = useState('');
@@ -17,9 +18,13 @@ const CommentSection = ({ post }) => {
 
 	const commentInputHandler = e => setComment(e.target.value);
 
-	const commentSubmitHandler = () => {
+	const commentSubmitHandler = async () => {
 		const finalComment = `${user.result.name}: ${comment}`;
-		dispatch(commentPost(finalComment, post._id));
+		const newComments = await dispatch(commentPost(finalComment, post._id));
+		setComments(newComments);
+		setComment('');
+
+		commentsRef.current.scrollIntoview({ behavior: 'smooth' });
 	};
 	return (
 		<>
@@ -30,9 +35,11 @@ const CommentSection = ({ post }) => {
 					</Typography>
 					{comments.map((c, i) => (
 						<Typography key={i} gutterBottom variant='subtitle1'>
-							{c}
+							<strong>{c.split(': ')[0]}: </strong>
+							{c.split(': ')[1]}
 						</Typography>
 					))}
+					<div ref={commentsRef} />
 				</div>
 
 				{user?.result?.name && (
