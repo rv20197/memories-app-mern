@@ -140,8 +140,6 @@ export const commentPost = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const { finalComment } = req.body;
-		console.log(finalComment);
-		console.log(id);
 
 		const post = await PostMessage.findById(id);
 		post.comments.push(finalComment);
