@@ -77,10 +77,6 @@ const PostDetails = () => {
 						</Typography>
 						<Divider style={{ margin: '20px 0' }} />
 						<Typography variant='body1'>
-							<strong>Realtime Chat - coming soon!</strong>
-						</Typography>
-						<Divider style={{ margin: '20px 0' }} />
-						<Typography variant='body1'>
 							<strong>Comments - coming soon!</strong>
 						</Typography>
 						<Divider style={{ margin: '20px 0' }} />
@@ -129,7 +125,15 @@ const PostDetails = () => {
 										<Typography gutterBottom variant='subtitle1'>
 											Likes: {likes.length}
 										</Typography>
-										<img src={selectedFile} width='200px' alt={title} />
+										<img
+											style={{
+												width: '200px',
+												borderRadius: '10px',
+												objectFit: 'cover'
+											}}
+											src={selectedFile}
+											alt={title}
+										/>
 									</div>
 								)
 							)}
