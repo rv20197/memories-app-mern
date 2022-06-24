@@ -90,10 +90,12 @@ export const likePost = id => async dispatch => {
 };
 
 export const commentPost = (finalComment, postId) => async dispatch => {
+	console.log(finalComment, postId);
 	try {
 		const { data } = await api.comment(finalComment, postId);
-		const action = { type: COMMENT_POST, payload: data };
-		dispatch(action);
+		console.log(data);
+		// const action = { type: COMMENT_POST, payload: data };
+		// dispatch(action);
 	} catch (error) {
 		console.error(error);
 	}

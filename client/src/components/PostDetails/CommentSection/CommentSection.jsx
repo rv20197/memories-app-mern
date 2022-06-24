@@ -13,7 +13,7 @@ const CommentSection = ({ post }) => {
 	const [comments, setComments] = useState([1, 2, 3, 4, 5]);
 	const [comment, setComment] = useState('');
 
-	const user = JSON.parse(localStorage.getItem('user'));
+	const user = JSON.parse(localStorage.getItem('profile'));
 
 	const commentInputHandler = e => setComment(e.target.value);
 
@@ -35,29 +35,31 @@ const CommentSection = ({ post }) => {
 					))}
 				</div>
 
-				<div style={{ width: '80%' }}>
-					<Typography gutterBottom variant='h5'>
-						Write a Comment
-					</Typography>
-					<TextField
-						fullWidth
-						minRows={4}
-						variant='outlined'
-						label='comment'
-						multiline
-						value={comment}
-						onChange={commentInputHandler}
-					/>
-					<Button
-						style={{ marginTop: '10px' }}
-						fullWidth
-						disabled={!comment}
-						variant='contained'
-						color='primary'
-						onClick={commentSubmitHandler}>
-						Comment
-					</Button>
-				</div>
+				{user?.result?.name && (
+					<div style={{ width: '80%' }}>
+						<Typography gutterBottom variant='h5'>
+							Write a Comment
+						</Typography>
+						<TextField
+							fullWidth
+							minRows={4}
+							variant='outlined'
+							label='Comment'
+							multiline
+							value={comment}
+							onChange={commentInputHandler}
+						/>
+						<Button
+							style={{ marginTop: '10px' }}
+							fullWidth
+							disabled={!comment}
+							variant='contained'
+							color='primary'
+							onClick={commentSubmitHandler}>
+							Comment
+						</Button>
+					</div>
+				)}
 			</div>
 		</>
 	);

@@ -8,7 +8,8 @@ import {
 	CardMedia,
 	Button,
 	Typography,
-	ButtonBase} from '@material-ui/core';
+	ButtonBase
+} from '@material-ui/core';
 
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
@@ -41,13 +42,7 @@ const Post = ({ post, setCurrentPostId }) => {
 		dispatch(deletePost(post._id));
 	};
 
-	const openPostHandler = () => {
-		if (user) {
-			history.push(`/posts/${post._id}`);
-		} else {
-			history.push(`/posts`);
-		}
-	};
+	const openPostHandler = () => history.push(`/posts/${post._id}`);
 
 	const Likes = () => {
 		if (post.likes.length > 0) {
