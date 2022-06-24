@@ -6,7 +6,8 @@ import {
 	createPost,
 	updatePost,
 	deletePost,
-	likePost
+	likePost,
+	commentPost
 } from '../controllers/posts-controller.js';
 
 import isAuth from '../middleware/isAuth.js';
@@ -20,7 +21,7 @@ router.get('/', getPosts);
 router.get('/search', getPostsBySearch);
 
 // GET: http://localhost:5000/posts/:id
-router.get('/:id', isAuth, getPostById);
+router.get('/:id', getPostById);
 
 // POST: http://localhost:5000/posts
 router.post('/', isAuth, createPost);
@@ -30,6 +31,9 @@ router.patch('/:id', isAuth, updatePost);
 
 // DELETE: http://localhost:5000/posts/:id
 router.delete('/:id', isAuth, deletePost);
+
+// POST: http://localhost:5000/posts/:id/likePost
+router.post('/:id/commentPost', isAuth, commentPost);
 
 // PATCH: http://localhost:5000/posts/:id/likePost
 router.patch('/:id/likePost', isAuth, likePost);
