@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Typography, TextField, Button } from '@material-ui/core';
@@ -10,7 +10,7 @@ const CommentSection = ({ post }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	const [comments, setComments] = useState([1, 2, 3, 4, 5]);
+	const [comments, setComments] = useState(post?.comments);
 	const [comment, setComment] = useState('');
 
 	const user = JSON.parse(localStorage.getItem('profile'));
@@ -30,7 +30,7 @@ const CommentSection = ({ post }) => {
 					</Typography>
 					{comments.map((c, i) => (
 						<Typography key={i} gutterBottom variant='subtitle1'>
-							comment {i}
+							{c}
 						</Typography>
 					))}
 				</div>
