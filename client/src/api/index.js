@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://memories-express-rest-backend.herokuapp.com';
+// const BASE_URL = 'https://memories-express-rest-backend.herokuapp.com';
 
-// const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000';
 
 const API = axios.create({ baseURL: BASE_URL });
 
