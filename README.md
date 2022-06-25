@@ -31,6 +31,15 @@ While developing this project I learned following lessons:
 **Server:** Node, Express, MongoDB, BcryptJS, JWT.
 
 
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file in server folder
+
+ `CONNECTION_URL` = <MONGO URL STRING>
+ 
+ `PORT` = <PORT>
+
+
 ## Run Locally
 
 Clone the project
