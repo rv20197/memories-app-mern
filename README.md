@@ -1,14 +1,12 @@
-
 # Memories App
+
 Fullstack responsive social media application to share your memories and explore the world by checking out others memories as well.
 
 With pagination search and filtering capabilities, detailed pages, authentication, comments and much more.
 
-
 ## Screenshots
 
 ![alt text](https://github.com/rv20197/memories-app-mern/blob/main/Memories.PNG?raw=true)
-
 
 ## Demo
 
@@ -16,7 +14,7 @@ https://memories-app-react-redux-vatsal-rajgor.netlify.app/posts
 
 ## Lessons Learned
 
-While developing this project I learned following lessons:
+While developing this project I learned how to implement following:
 
 1. Redux and Redux-Thunk.
 2. Google Authorization.
@@ -24,21 +22,20 @@ While developing this project I learned following lessons:
 4. Pagination Functionality.
 5. Search and Recommended features.
 6. Material UI to build UI.
+
 ## Tech Stack
 
 **Client:** React, Redux, Material-UI, Axios, React Router.
 
 **Server:** Node, Express, MongoDB, BcryptJS, JWT.
 
-
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file in server folder
 
- `CONNECTION_URL` = MONGO URL STRING
- 
- `PORT` = PORT
+`CONNECTION_URL` = MONGO URL STRING
 
+`PORT` = PORT
 
 ## Run Locally
 
@@ -76,23 +73,21 @@ To deploy the backend:
 
 - Use the server folder to upload it to the cloud provider of your choice to get your backend up and running
 
-
 To deploy the frontend run:
 
 ```bash
   npm run build
 ```
+
 - Then upload the build folder to the cloud provider of your choice to host the application.
 
-
-
 ## 🔗 Links
+
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vatsal-rajgor/)
 
-
 ## 🛠 Skills
-HTML, CSS, JavaScript, React, Angular, MongoDB, SQL, ExpressJS, NodeJS.
 
+HTML, CSS, JavaScript, React, Angular, MongoDB, SQL, ExpressJS, NodeJS.
 
 ## License
 
