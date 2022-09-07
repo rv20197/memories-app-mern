@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	Avatar,
 	Button,
@@ -9,16 +9,16 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
+// import { GoogleLogin } from 'react-google-login';
+// import { gapi } from 'gapi-script';
 
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import AuthInput from './AuthInput';
-import Icon from './Icon';
+// import Icon from './Icon';
 import useStyles from './Auth-styles';
-import { AUTH } from '../../constants/actionTypes';
+// import { AUTH } from '../../constants/actionTypes';
 import { signUp, signIn } from '../../redux/actions/auth-action';
 
 const initialFormState = {
@@ -30,8 +30,8 @@ const initialFormState = {
 };
 
 const Auth = () => {
-	const GOOGLE_CLIENT_ID =
-		'436240735931-ojsalitcfccqujidpog7q1asdli7hn9p.apps.googleusercontent.com';
+	// const GOOGLE_CLIENT_ID =
+	// 	'436240735931-ojsalitcfccqujidpog7q1asdli7hn9p.apps.googleusercontent.com';
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignUp, setIsSignUp] = useState(false);
@@ -40,15 +40,15 @@ const Auth = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	useEffect(() => {
-		const start = () => {
-			gapi.auth2.init({
-				clientId: GOOGLE_CLIENT_ID,
-				scope: ''
-			});
-		};
-		gapi.load('client:auth2', start);
-	});
+	// useEffect(() => {
+	// 	const start = () => {
+	// 		gapi.auth2.init({
+	// 			clientId: GOOGLE_CLIENT_ID,
+	// 			scope: ''
+	// 		});
+	// 	};
+	// 	gapi.load('client:auth2', start);
+	// });
 
 	const classes = useStyles();
 
@@ -74,22 +74,22 @@ const Auth = () => {
 		setShowPassword(false);
 	};
 
-	const googleSuccessHandler = async res => {
-		try {
-			const result = res?.profileObj;
-			const token = res?.tokenId;
-			const action = { type: AUTH, payload: { result, token } };
-			dispatch(action);
-			history.push('/');
-		} catch (error) {
-			console.error(error);
-		}
-	};
+	// const googleSuccessHandler = async res => {
+	// 	try {
+	// 		const result = res?.profileObj;
+	// 		const token = res?.tokenId;
+	// 		const action = { type: AUTH, payload: { result, token } };
+	// 		dispatch(action);
+	// 		history.push('/');
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
+	// };
 
-	const googleFailureHandler = error => {
-		console.error(error);
-		console.error('Google Sign In Failed. Try Again Later');
-	};
+	// const googleFailureHandler = error => {
+	// 	console.error(error);
+	// 	console.error('Google Sign In Failed. Try Again Later');
+	// };
 
 	return (
 		<Container component='main' maxWidth='xs'>
@@ -152,7 +152,7 @@ const Auth = () => {
 						{isSignUp ? 'Sign Up' : 'Sign In'}
 					</Button>
 
-					<div id='signInButton'>
+					{/* <div id='signInButton'>
 						<GoogleLogin
 							clientId={GOOGLE_CLIENT_ID}
 							render={renderProps => (
@@ -171,7 +171,7 @@ const Auth = () => {
 							onFailure={googleFailureHandler}
 							cookiePolicy='single_host_origin'
 						/>
-					</div>
+					</div> */}
 
 					<Grid container justifyContent='flex-end'>
 						<Grid item>

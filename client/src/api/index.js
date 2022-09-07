@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://memories-express-rest-backend.herokuapp.com';
+const BASE_URL = 'https://mern-vercel-xi.vercel.app/';
 
 // const BASE_URL = 'http://localhost:5000';
 
